@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link @click="changeCookie('en')" to="/lang/en">English</router-link> |
+    <router-link @click="changeCookie('rs')" to="/lang/rs">Srpski</router-link>
   </div>
   <router-view/>
 </template>
@@ -28,3 +28,26 @@
   }
 }
 </style>
+
+<script>
+import AgCookie from './agCookie'
+
+export default {
+  data (){
+    return{
+      cookieLanguage: '',
+      cookies: null
+    }
+  },
+  methods: {
+    changeCookie: function(lang) {
+      this.cookieLanguage = lang;
+      this.setCookie()
+    },
+    setCookie: function(){
+      this.cookies = new AgCookie;
+      this.cookies.create('language', this.cookieLanguage, 1)
+    }
+  }
+}
+</script>
